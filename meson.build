@@ -2895,9 +2895,6 @@ config_host_data.set('CONFIG_PTHREAD_AFFINITY_NP', cc.links(osdep_prefix + '''
     CPU_FREE(cpuset);
     return 0;
   }''', dependencies: threads))
-config_host_data.set('CONFIG_SIGNALFD', cc.links(osdep_prefix + '''
-  #include <sys/signalfd.h>
-  int main(void) { return signalfd(-1, NULL, SFD_CLOEXEC); }'''))
 
 config_host_data.set('HAVE_MLOCKALL', cc.links(osdep_prefix + '''
   #include <sys/mman.h>
@@ -3256,7 +3253,7 @@ disassemblers = {
   'loongarch' : ['CONFIG_LOONGARCH_DIS'],
 }
 
-have_ivshmem = config_host_data.get('CONFIG_EVENTFD')
+have_ivshmem = false
 host_kconfig = \
   (get_option('fuzzing') ? ['CONFIG_FUZZ=y'] : []) + \
   (have_tpm ? ['CONFIG_TPM=y'] : []) + \
